@@ -1,0 +1,22 @@
+.SidebarLayout {
+  &__content {
+    grid-area: content;
+    grid-column: span 2;
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+    background-color: lavender;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin: 0 0 0 8px;
+        padding: 8px 0;
+      }
+    }
+  }
+}
