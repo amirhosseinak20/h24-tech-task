@@ -1,4 +1,4 @@
-.SidebarLayout {
+.ArticlesLayout {
   &__content {
     grid-area: content;
     grid-column: span 2;
@@ -18,5 +18,11 @@
         padding: 8px 0;
       }
     }
+  }
+
+  &__List {
+    display: grid;
+    grid-gap: 26px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 }

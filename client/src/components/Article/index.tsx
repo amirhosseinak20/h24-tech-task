@@ -1,15 +1,17 @@
 import React from "react";
+import { Image } from "components/Image";
 
 import { priceFormatter } from "utils";
 
 import styles from "./Article.module.scss";
 
-export function Article({ article }: { article: IArticle }) {
+type PropTypes = IArticle;
+export function Article({ name, images, prices }: PropTypes) {
   return (
     <div className={styles.Article}>
-      <img src={article.images[0].path} alt={article.name} />
-      <div>{article.name}</div>
-      <div>{priceFormatter(article.prices.regular.value / 100)}</div>
+      <Image width={200} height={200} src={images?.[0]?.path} alt={name} />
+      <div>{name}</div>
+      <div>{priceFormatter(prices?.regular?.value / 100)}</div>
       <button>Add to cart</button>
     </div>
   );

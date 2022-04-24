@@ -1,55 +1,54 @@
 import { useState, useCallback, useEffect } from "react";
+import { request as graphqlRequest } from "graphql-request";
+import { DocumentNode } from "graphql";
+import { GRAPHQL_API_ENDPOINT } from "constants/env";
+import { useLocation } from "react-router-dom";
 
-import { request as apiRequest } from "utils/api";
-
-const INITIAL_DATA = {
+const INITIAL_DATA: { data: any; isLoading: boolean; error: any } = {
   data: null,
   isLoading: false,
   error: null,
 };
 
 type ParamsType = {
-  query: string;
+  query: DocumentNode;
   onSuccess?: (res: any) => void;
   onError?: (error: any) => void;
   skip?: boolean;
+  initialVariables?: Record<string, any>;
 };
-export function useQuery({ query, onSuccess, onError, skip }: ParamsType) {
-  const [{ data, isLoading, error }, setData] = useState(INITIAL_DATA);
+export function useQuery({ query, skip, initialVariables }: ParamsType) {
+  const location = useLocation();
+  const [{ data, error, isLoading }, setState] = useState(INITIAL_DATA);
 
-  const handleSuccess = useCallback(
-    (data: any) => {
-      setData((prevData) => ({ ...prevData, data, isLoading: false }));
-    },
-    [setData]
-  );
-  const handleError = useCallback(
-    (error: any) => {
-      setData((prevData) => ({ ...prevData, isLoading: false, error }));
-    },
-    [setData]
-  );
+  const setIsLoading = (isLoading: boolean) =>
+    setState((prev) => ({ ...prev, isLoading }));
+  const setData = (data: any) =>
+    setState((prev) => ({ ...prev, isLoading: false, data }));
+  const setError = (error: any) =>
+    setState((prev) => ({ ...prev, isLoading: false, error }));
 
-  const request = useCallback(() => {
-    setData((prevData) => ({ ...prevData, isLoading: true }));
-    apiRequest({ query, onSuccess: handleSuccess, onError: handleError });
-  }, [setData, query]);
+  const request = useCallback(
+    async (variables: any) => {
+      setIsLoading(true);
+      try {
+        const response = await graphqlRequest(
+          GRAPHQL_API_ENDPOINT,
+          query,
+          variables
+        );
+        setData(response);
+      } catch (e) {
+        setError(e);
+      }
+    },
+    [setState]
+  );
 
   useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-    if (data) {
-      onSuccess?.(data);
-    }
-    if (error) {
-      onError?.(error);
-    }
-  }, [data, isLoading, error]);
+    setIsLoading(true);
+    !skip && request(initialVariables);
+  }, [location]);
 
-  useEffect(() => {
-    !skip && request();
-  }, []);
-
-  return { data, isLoading, error, request };
+  return { request, data, error, isLoading };
 }
