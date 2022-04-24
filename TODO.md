@@ -1,4 +1,6 @@
-- Add components stories
-- Add tests
-- Add e2e test
-- Add ARIA attributes and improve a11y
+- Add components stories to have documentation for our components to show how to use them
+- Add tests for insuring units functionality
+- Add e2e test for making sure that end user will have a good exprience
+- Add ARIA attributes and improve a11y for increasing variety of people can use the app and providing a better exprience for them.
+- Add sentry for monitoring app
+- check final bundle size and improve pitfalls
