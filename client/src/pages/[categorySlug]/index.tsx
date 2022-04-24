@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { ArticleList } from "components/ArticleList";
 import { useQuery } from "hooks/useQuery";
 import { ARTICLES_LIST_QUERY } from "graphql/queries";
 import { ArticlesLayout } from "layouts/ArticlesLayout";

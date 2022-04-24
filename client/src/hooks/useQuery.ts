@@ -42,12 +42,14 @@ export function useQuery({ query, skip, initialVariables }: ParamsType) {
         setError(e);
       }
     },
-    [setState]
+    // eslint-disable-next-line
+    [setState, query]
   );
 
   useEffect(() => {
     setIsLoading(true);
     !skip && request(initialVariables);
+    // eslint-disable-next-line
   }, [location]);
 
   return { request, data, error, isLoading };
