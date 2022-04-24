@@ -4,3 +4,5 @@
 - Add ARIA attributes and improve a11y for increasing variety of people can use the app and providing a better exprience for them.
 - Add sentry for monitoring app
 - check final bundle size and improve pitfalls
+- use lates yarn to use plugins, better dependency checkings, zero-install feature
+- add git precommit hooks to make sure our code style always is the same configuring commitlint, prettier, husky, lint-staged

@@ -13,3 +13,5 @@ folder structure:
 It is recommended that all <img> tags include both width and height attributes. Without dimensions specified, layout shifts can occur, which are more noticeable on pages that take some time to load.
 
 PLEASE don't directly use 3rd party libraries, write a wrapper for them and use that wrapper because in the future you can safely make change in them like upgrading to new versions or replacing them with new component.
+
+I used yarn because it's faster.
